@@ -1,6 +1,6 @@
 user: www-data
 group: www-data
-address: proxy.gives.co
+address: 128.199.174.25
 port: 443
 pid: tmp/pids/thin.pid
 wait: 30
