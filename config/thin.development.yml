@@ -1,0 +1,10 @@
+port: 80
+wait: 30
+timeout: 30
+log: log/thin.log
+max_conns: 512
+require: []
+environment: development
+max_persistent_conns: 512
+servers: 1
+daemonize: false
