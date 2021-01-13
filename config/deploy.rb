@@ -61,9 +61,7 @@ namespace :forward_proxy do
   desc "Stop forward proxy"
   task :stop do
     on roles(:app) do
-      within current_path do
-        execute "if [ -f #{current_path}/tmp/pids/forward_proxy.pid ]; then kill -15 `cat #{current_path}/tmp/pids/forward_proxy.pid`; fi"
-      end
+      execute "if [ -f #{shared_path}/tmp/pids/forward_proxy.pid ]; then kill -15 `cat #{shared_path}/tmp/pids/forward_proxy.pid`; fi"
     end
   end
 

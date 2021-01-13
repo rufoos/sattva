@@ -1,8 +1,10 @@
 user: www-data
 group: www-data
 port: 443
+pid: tmp/pids/thin.pid
 wait: 30
 timeout: 30
+log: log/thin.log
 max_conns: 1024
 require: []
 environment: production
