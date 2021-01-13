@@ -21,7 +21,7 @@ set :deploy_to, "/app/sattva"
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, "config/thin.yml"
+# append :linked_files, "config/thin.#{fetch(:stage)}.yml"
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/sockets'
@@ -38,7 +38,7 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/sockets'
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
-set :thin_config_path, -> { "#{shared_path}/config/thin.#{fetch(:stage)}.yml" }
+set :thin_config_path, -> { "#{current_path}/config/thin.#{fetch(:stage)}.yml" }
 
 namespace :forward_proxy do
   desc "Start forward proxy"
@@ -52,14 +52,18 @@ namespace :forward_proxy do
         "--ssl-key-file #{fetch(:ssl_key_file)}",
         "--ssl-cert-file #{fetch(:ssl_cert_file)}",
       ]
-      execute "if [ -f #{shared_path}/bin/forward_proxy ]; then #{shared_path}/bin/forward_proxy #{config.join(' ')} -d; fi"
+      within current_path do
+        execute "if [ -f #{current_path}/bin/forward_proxy ]; then #{current_path}/bin/forward_proxy #{config.join(' ')} -d; fi"
+      end
     end
   end
 
   desc "Stop forward proxy"
   task :stop do
     on roles(:app) do
-      execute "if [ -f #{shared_path}/tmp/pids/forward_proxy.pid ]; then kill -15 `cat #{shared_path}/tmp/pids/forward_proxy.pid`; fi"
+      within current_path do
+        execute "if [ -f #{current_path}/tmp/pids/forward_proxy.pid ]; then kill -15 `cat #{current_path}/tmp/pids/forward_proxy.pid`; fi"
+      end
     end
   end
 

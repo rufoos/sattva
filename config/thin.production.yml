@@ -14,6 +14,6 @@ daemonize: true
 socket: /tmp/thin.sock
 chdir: /app/sattva
 ssl: true
-ssl_key_file: /etc/letsencrypt/live/panda.gives.co.key
-ssl_cert_file: /etc/letsencrypt/live/panda.gives.co.cert
+ssl_key_file: /etc/letsencrypt/live/proxy.gives.co/privkey.pem
+ssl_cert_file: /etc/letsencrypt/live/proxy.gives.co/fullchain.pem
 ssl_disable_verify: false
