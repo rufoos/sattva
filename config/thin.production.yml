@@ -12,7 +12,6 @@ max_persistent_conns: 512
 servers: 3
 daemonize: true
 socket: /tmp/thin.sock
-chdir: /app/sattva
 ssl: true
 ssl_key_file: /etc/letsencrypt/live/proxy.gives.co/privkey.pem
 ssl_cert_file: /etc/letsencrypt/live/proxy.gives.co/fullchain.pem
