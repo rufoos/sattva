@@ -1,5 +1,6 @@
-user: root
-group: root
+user: www-data
+group: www-data
+address: proxy.gives.co
 port: 443
 pid: tmp/pids/thin.pid
 wait: 30
