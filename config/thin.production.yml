@@ -1,5 +1,5 @@
-user: www-data
-group: www-data
+user: root
+group: root
 port: 443
 pid: tmp/pids/thin.pid
 wait: 30
