@@ -5,15 +5,12 @@ require 'optparse'
 options = { :action => :run }
 
 daemonize_help = "run daemonized in the background (default: false)"
-ssl_help = "enable SSL"
 port_help = "server port (default: 8080)"
 pidfile_help = "the pid filename"
 logfile_help = "the log filename"
 include_help = "an additional $LOAD_PATH (may be used more than once)"
 debug_help = "set $DEBUG to true"
 warn_help = "enable warnings"
-ssl_key_help = "the SSL certificate .key filename"
-ssl_cert_help = "the SSL certificate .crt filename"
 
 op = OptionParser.new
 op.banner = "An example of how to daemonize a long running Ruby process."
@@ -24,12 +21,9 @@ op.separator ""
 op.separator ""
 op.separator "Process options:"
 op.on("-d", "--daemonize", daemonize_help) { options[:daemonize] = true }
-op.on("--port", port_help) { options[:port] = 8080 }
-op.on("--pid PIDFILE", pidfile_help) { |value| options[:pidfile] = value }
-op.on("--log LOGFILE", logfile_help) { |value| options[:logfile] = value }
-op.on("--ssl", ssl_help) { options[:ssl] = true }
-op.on("--ssl-key-file SSL .key file path", ssl_key_help) { |value| options[:ssl_key_file] = value }
-op.on("--ssl-cert-file SSL .crt file path", ssl_cert_help) { |value| options[:ssl_cert_file] = value }
+op.on('-P', "--port [PORT]", 8080, port_help) { |value| options[:port] = value }
+op.on('-p', "--pid [PIDFILE]", pidfile_help) { |value| options[:pidfile] = value }
+op.on('-l', "--log [LOGFILE]", logfile_help) { |value| options[:logfile] = value }
 
 op.separator ""
 op.separator "Ruby options:"

@@ -45,12 +45,9 @@ namespace :forward_proxy do
   task :start do
     on roles(:app) do
       config = [
-        "--port 80",
-        "--pid #{shared_path}/tmp/pids/forward_proxy.pid",
-        "--log #{shared_path}/log/forward_proxy.log",
-        "--ssl",
-        "--ssl-key-file #{fetch(:ssl_key_file)}",
-        "--ssl-cert-file #{fetch(:ssl_cert_file)}",
+        "-P #{fetch(:forward_proxy_port)}",
+        "-p #{shared_path}/tmp/pids/forward_proxy.pid",
+        "-l #{shared_path}/log/forward_proxy.log"
       ]
       within current_path do
         execute "if [ -f #{current_path}/bin/forward_proxy ]; then #{current_path}/bin/forward_proxy #{config.join(' ')} -d; fi"

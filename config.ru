@@ -1,14 +1,13 @@
 require 'rack/reverse_proxy'
 
-RACK_ENV = ENV['RACK_ENV'] || 'development' unless defined?(RACK_ENV)
-is_production = RACK_ENV == 'production'
-
-ObjectSpace.each_object(Thin::Runner) { |obj| @config = obj.options }
-Thin::Logging.log_msg("Starting reverse proxy (#{RACK_ENV}) on #{@config[:port]}")
+reverse_host = ENV['REVERSE_PROXY_HOST']
+unless reverse_host
+  raise "Environment variable REVERSE_PROXY_HOST is not defined"
+end
 use Rack::ReverseProxy do
   reverse_proxy_options preserve_host: true, matching: :first
   reverse_proxy /^\/check-ip(.*)$/, 'https://api.ipify.org$1'
-  reverse_proxy '/', is_production ? 'https://give.asia/' : 'https://gives.co/'
+  reverse_proxy '/', reverse_host
 end
 
 app = proc do |env|

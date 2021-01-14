@@ -7,7 +7,18 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
+server '128.199.174.25',
+  user: 'root',
+  roles: %w{app},
+  ssh_options: {
+    auth_methods: %w(publickey password),
+    port: 22
+  }
 
+set :default_env, {
+  "REVERSE_PROXY_HOST" => "https://gives.co/",
+  'forward_proxy_port' => 3001
+}
 
 # role-based syntax
 # ==================

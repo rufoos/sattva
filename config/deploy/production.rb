@@ -7,7 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 
-server '128.199.174.25',
+server '134.209.100.19',
   user: 'root',
   roles: %w{app},
   ssh_options: {
@@ -16,8 +16,8 @@ server '128.199.174.25',
   }
 
 set :default_env, {
-  'ssl_key_file' => '/etc/letsencrypt/live/panda.gives.co.key',
-  'ssl_cert_file' => '/etc/letsencrypt/live/panda.gives.co.crt'
+  "REVERSE_PROXY_HOST" => "https://give.asia/",
+  'forward_proxy_port' => 3001
 }
 
 # role-based syntax

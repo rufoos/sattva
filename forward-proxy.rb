@@ -9,6 +9,7 @@ class ForwardProxy
   attr_reader :options, :config
 
   def self.run!(options)
+    puts options
     ForwardProxy.new(options).run!
   end
 
@@ -53,7 +54,7 @@ class ForwardProxy
   end
 
   def port
-    options[:port] || 8080
+    options[:port]
   end
 
   def ssl?
@@ -69,7 +70,7 @@ class ForwardProxy
   end
 
   def server_config
-    config.merge!(
+    @config.merge!(
       SSLEnable: true,
       SSLVerifyClient: OpenSSL::SSL::VERIFY_NONE,
       SSLPrivateKey: OpenSSL::PKey::RSA.new(File.open(ssl_key_file).read),
@@ -77,10 +78,12 @@ class ForwardProxy
       SSLCertName: [["CN", WEBrick::Utils::getservername]]
     ) if ssl? && ssl_key_file? && ssl_cert_file?
 
-    config.merge!(
+    @config.merge!(
       Logger: server_logger,
       AccessLog: server_access_log
     ) if logfile?
+
+    @config
   end
 
   def server_logger
