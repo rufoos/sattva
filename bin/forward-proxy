@@ -39,7 +39,7 @@ op.on("-v", "--version") { options[:action] = :version }
 op.separator ""
 op.parse!(ARGV)
 
-require './forward-proxy.rb' unless options[:action] == :help
+require File.join(File.dirname(__FILE__), '../forward-proxy.rb') unless options[:action] == :help
 
 case options[:action]
 when :help then

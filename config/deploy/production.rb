@@ -17,7 +17,7 @@ server '134.209.100.19',
 
 set :default_env, {
   "REVERSE_PROXY_HOST" => "https://give.asia/",
-  'forward_proxy_port' => 3001
+  'FORWARD_PROXY_PORT' => 3001
 }
 
 # role-based syntax

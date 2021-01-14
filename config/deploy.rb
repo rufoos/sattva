@@ -40,17 +40,19 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/sockets'
 
 set :thin_config_path, -> { "#{current_path}/config/thin.#{fetch(:stage)}.yml" }
 
+after 'deploy:publishing', 'deploy:restart'
+
 namespace :forward_proxy do
   desc "Start forward proxy"
   task :start do
     on roles(:app) do
       config = [
-        "-P #{fetch(:forward_proxy_port)}",
+        "-P #{fetch(:default_env)['FORWARD_PROXY_PORT']}",
         "-p #{shared_path}/tmp/pids/forward_proxy.pid",
         "-l #{shared_path}/log/forward_proxy.log"
       ]
       within current_path do
-        execute "if [ -f #{current_path}/bin/forward_proxy ]; then #{current_path}/bin/forward_proxy #{config.join(' ')} -d; fi"
+        puts "if [ -f #{current_path}/bin/forward-proxy ]; then #{current_path}/bin/forward-proxy #{config.join(' ')} -d; fi"
       end
     end
   end
@@ -68,5 +70,13 @@ namespace :forward_proxy do
       invoke 'forward_proxy:stop'
       invoke 'forward_proxy:start'
     end
+  end
+end
+
+
+namespace :deploy do
+  task :restart do
+    invoke 'thin:restart'
+    invoke 'forward_proxy:restart'
   end
 end

@@ -17,7 +17,7 @@ server '128.199.174.25',
 
 set :default_env, {
   "REVERSE_PROXY_HOST" => "https://gives.co/",
-  'forward_proxy_port' => 3001
+  'FORWARD_PROXY_PORT' => 3001
 }
 
 # role-based syntax
